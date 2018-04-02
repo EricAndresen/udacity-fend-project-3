@@ -93,7 +93,7 @@ function addRandomEnemy() {
         if( randomDecider == 1) {
             lane = randomLane();
             // reuse the random assignment of lane for speed
-            allEnemies.unshift(new Enemy(lane, speed = lane / 2));
+            allEnemies.unshift(new Enemy(lane, speed = lane * 0.75));
         }
     }
 }

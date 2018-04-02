@@ -1,8 +1,4 @@
-/* TODO:
-    2. insert Gem on map
-    3. When player reaches Gem, there is a win sequence
-    4. Limit players movement to map.
-*/
+
 
 // Enemies our player must avoid
 var Enemy = function(startingY) {
@@ -51,19 +47,15 @@ Player.prototype.render = function(){
 }
 
 Player.prototype.handleInput = function(keyName) {
-    switch(keyName) {
-        case 'left':
-            this.x -= 25;
-            break;
-        case 'up':
-            this.y -= 25;
-            break;
-        case 'right':
-            this.x += 25;
-            break;
-        case 'down':
-            this.y += 25;
-            break;
+        
+    if(keyName == 'left' && player.x > 0){
+        this.x -= 25;
+    } else if(keyName == 'up' && player.y > -25){
+        this.y -= 25;
+    } else if(keyName == 'right' && player.x < 400 ) {
+        this.x += 25;
+    } else if(keyName == 'down' && player.y < 400 ) {
+        this.y += 25;
     }
 }
 

@@ -1,3 +1,10 @@
+/* TODO:
+    1. When enemy and player occupy same space player dies / respawns
+    2. insert Gem on map
+    3. When player reaches Gem, there is a win sequence
+    4. Limit players movement to map.
+*/
+
 // Enemies our player must avoid
 var Enemy = function(startingY) {
     // Variables applied to each of our instances go here,
@@ -92,6 +99,24 @@ function randomLane() {
             break;
     }
 };
+
+function checkCollisions() {
+    // if player is in the same space as enemy
+    // get player x / y
+    // make a for each loop for enemies
+    allEnemies.forEach((enemy) => {
+        if (comparePositions(player, enemy)) {
+            player.x = 200;
+            player.y = 400;
+        }
+    })
+}
+
+function comparePositions(first, second) {
+    let xClear = Math.abs(first.x - second.x) < 65;
+    let yClear = Math.abs(first.y - second.y) < 65;
+    return xClear && yClear;
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies

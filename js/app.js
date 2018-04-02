@@ -1,5 +1,4 @@
 /* TODO:
-    1. When enemy and player occupy same space player dies / respawns
     2. insert Gem on map
     3. When player reaches Gem, there is a win sequence
     4. Limit players movement to map.
@@ -68,6 +67,24 @@ Player.prototype.handleInput = function(keyName) {
     }
 }
 
+const Cage = function(){
+    this.sprite = "images/nicholas-cage.png";
+    this.x = 225;
+    this.y = 40;
+}
+
+Cage.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50, 75);
+}
+
+Cage.prototype.update = function() {
+    if (comparePositions(player, cage, compareRadius = 30)){
+        console.log("win")
+        let winner = document.querySelector('.winner');
+        winner.style.display = "flex";
+    }
+}
+
 function addRandomEnemy(dt) {
     // difficulty can be adjusted by changing frequency
     // its better to change difficulty with speed (see Enemy.update)
@@ -105,25 +122,27 @@ function checkCollisions() {
     // get player x / y
     // make a for each loop for enemies
     allEnemies.forEach((enemy) => {
-        if (comparePositions(player, enemy)) {
+        if (comparePositions(player, enemy, compareRadius = 65)) {
             player.x = 200;
             player.y = 400;
         }
     })
 }
 
-function comparePositions(first, second) {
-    let xClear = Math.abs(first.x - second.x) < 65;
-    let yClear = Math.abs(first.y - second.y) < 65;
+function comparePositions(first, second, compareRadius) {
+    let xClear = Math.abs(first.x - second.x) < compareRadius;
+    let yClear = Math.abs(first.y - second.y) < compareRadius;
     return xClear && yClear;
 }
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-let enemyOne = new Enemy(65);
+let enemyOne = new Enemy(225);
 let player = new Player();
+let cage = new Cage();
 
 let allEnemies = [enemyOne]
 

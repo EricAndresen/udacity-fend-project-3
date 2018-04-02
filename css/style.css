@@ -1,3 +1,31 @@
 body {
     text-align: center;
 }
+
+.winner {
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+button {
+    margin: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #222;
+}
+
+button:hover {
+    -webkit-box-shadow: 1px 10px 29px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 10px 29px 0px rgba(0,0,0,0.75);
+    box-shadow: 1px 10px 29px 0px rgba(0,0,0,0.75);
+}
+
+a{
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+}
+

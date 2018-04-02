@@ -1,7 +1,8 @@
-
+// TODO: Make Nicholas Cage bob up and down
+// TODO: enemy speeds must vary
 
 // Enemies our player must avoid
-var Enemy = function(startingY) {
+var Enemy = function(startingY, speed = 100) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -10,6 +11,8 @@ var Enemy = function(startingY) {
     this.sprite = 'images/enemy-bug.png';
     this.x = 0;
     this.y = startingY;
+    this.speed = speed;
+
 };
 
 // Update the enemy's position, required method for game
@@ -19,7 +22,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     // This can be changed to affect level of difficulty.
-    this.x += 50 * dt;
+    this.x += this.speed * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -77,7 +80,7 @@ Cage.prototype.update = function() {
     }
 }
 
-function addRandomEnemy(dt) {
+function addRandomEnemy() {
     // difficulty can be adjusted by changing frequency
     // its better to change difficulty with speed (see Enemy.update)
     const frequencyConstant = 0.010;
@@ -89,7 +92,8 @@ function addRandomEnemy(dt) {
         randomDecider = Math.floor(Math.random() * (1 + frequencyConstant));
         if( randomDecider == 1) {
             lane = randomLane();
-            allEnemies.unshift(new Enemy(lane));
+            // reuse the random assignment of lane for speed
+            allEnemies.unshift(new Enemy(lane, speed = lane / 2));
         }
     }
 }

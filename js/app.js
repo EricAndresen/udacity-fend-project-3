@@ -47,16 +47,16 @@ Player.prototype.render = function(){
 Player.prototype.handleInput = function(keyName) {
     switch(keyName) {
         case 'left':
-            this.x -= 50;
+            this.x -= 25;
             break;
         case 'up':
-            this.y -= 50;
+            this.y -= 25;
             break;
         case 'right':
-            this.x += 50;
+            this.x += 25;
             break;
         case 'down':
-            this.y += 50;
+            this.y += 25;
             break;
     }
 }

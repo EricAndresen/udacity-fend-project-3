@@ -64,7 +64,7 @@ Player.prototype.handleInput = function(keyName) {
 function addRandomEnemy(dt) {
     // difficulty can be adjusted by changing frequency
     // its better to change difficulty with speed (see Enemy.update)
-    const frequencyConstant = 0.006;
+    const frequencyConstant = 0.010;
     const minDistance = 100;
     
     // check if last enemy is the minimum distance from start
@@ -72,10 +72,26 @@ function addRandomEnemy(dt) {
         // randomly add a new enemy
         randomDecider = Math.floor(Math.random() * (1 + frequencyConstant));
         if( randomDecider == 1) {
-            allEnemies.unshift(new Enemy(65));
+            lane = randomLane();
+            allEnemies.unshift(new Enemy(lane));
         }
     }
 }
+
+function randomLane() {
+    lane = Math.floor(Math.random() * 3) + 1;
+    switch(lane){
+        case 1:
+            return 65;
+            break;
+        case 2:
+            return 150;
+            break;
+        case 3:
+            return 225;
+            break;
+    }
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies

@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(startingY) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -7,7 +7,7 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = 0;
-    this.y = 50;
+    this.y = startingY;
 };
 
 // Update the enemy's position, required method for game
@@ -25,6 +25,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -36,7 +37,6 @@ var Player = function() {
 }
 
 Player.prototype.update = function(dt){
-    console.log("player moved");
     // will update this.x and this.y
 }
 
@@ -61,11 +61,27 @@ Player.prototype.handleInput = function(keyName) {
     }
 }
 
+function addRandomEnemy(dt) {
+    // difficulty can be adjusted by changing frequency
+    // its better to change difficulty with speed (see Enemy.update)
+    const frequencyConstant = 0.006;
+    const minDistance = 100;
+    
+    // check if last enemy is the minimum distance from start
+    if (allEnemies[0].x > minDistance) {
+        // randomly add a new enemy
+        randomDecider = Math.floor(Math.random() * (1 + frequencyConstant));
+        if( randomDecider == 1) {
+            allEnemies.unshift(new Enemy(65));
+        }
+    }
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-let enemyOne = new Enemy();
+let enemyOne = new Enemy(65);
 let player = new Player();
 
 let allEnemies = [enemyOne]

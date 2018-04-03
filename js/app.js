@@ -14,12 +14,21 @@ class Enemy {
     update(dt) {
         // Multiplying by dt keeps speed constant across computers
         this.x += this.speed * dt;
+        this.checkCollisions(this, player);
     }
 
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
+
+    // If player and enemy collide, reset player
+    checkCollisions(first, second) {
+        if (comparePositions(first, second)) {
+            second.x = 200;
+            second.y = 400;
+        }
+    }
 };
 
 
@@ -102,19 +111,8 @@ function randomLane() {
 };
 
 
-// If player and enemy collide, reset player
-function checkCollisions() {
-    allEnemies.forEach((enemy) => {
-        if (comparePositions(player, enemy, compareRadius = 65)) {
-            player.x = 200;
-            player.y = 400;
-        }
-    })
-}
-
-
 // check if first and second object overlap
-function comparePositions(first, second, compareRadius) {
+function comparePositions(first, second, compareRadius = 65) {
     let xClear = Math.abs(first.x - second.x) < compareRadius;
     let yClear = Math.abs(first.y - second.y) < compareRadius;
     return xClear && yClear;

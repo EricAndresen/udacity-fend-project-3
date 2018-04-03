@@ -1,5 +1,4 @@
 // TODO: Make Nicholas Cage bob up and down
-// TODO: enemy speeds must vary
 
 // Enemies our player must avoid
 var Enemy = function(startingY, speed = 100) {
@@ -65,7 +64,7 @@ Player.prototype.handleInput = function(keyName) {
 const Cage = function(){
     this.sprite = "images/nicholas-cage.png";
     this.x = 225;
-    this.y = 40;
+    this.y = 0;
 }
 
 Cage.prototype.render = function(){
@@ -73,7 +72,7 @@ Cage.prototype.render = function(){
 }
 
 Cage.prototype.update = function() {
-    if (comparePositions(player, cage, compareRadius = 30)){
+    if (comparePositions(player, cage, compareRadius = 45)){
         console.log("win")
         let winner = document.querySelector('.winner');
         winner.style.display = "flex";
@@ -83,10 +82,10 @@ Cage.prototype.update = function() {
 function addRandomEnemy() {
     // difficulty can be adjusted by changing frequency
     // its better to change difficulty with speed (see Enemy.update)
-    const frequencyConstant = 0.010;
+    const frequencyConstant = 0.05;
     const minDistance = 100;
     
-    // check if last enemy is the minimum distance from start
+    // check if last enemy is the minimum distance, so no overlap
     if (allEnemies[0].x > minDistance) {
         // randomly add a new enemy
         randomDecider = Math.floor(Math.random() * (1 + frequencyConstant));

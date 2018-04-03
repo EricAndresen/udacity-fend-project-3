@@ -1,91 +1,78 @@
 // TODO: Make Nicholas Cage bob up and down
 
-// Enemies our player must avoid
-var Enemy = function(startingY, speed = 100) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Lady Bugs that try to kill you, startingY determines which lane it is in
+class Enemy {
+    constructor(startingY, speed = 100) {
+        this.sprite = 'images/enemy-bug.png';
+        this.x = 0;
+        this.y = startingY;
+        this.speed = speed;
+    }
+    
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update(dt) {
+        // Multiplying by dt keeps speed constant across computers
+        this.x += this.speed * dt;
+    }
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
-    this.y = startingY;
-    this.speed = speed;
-
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    // This can be changed to affect level of difficulty.
-    this.x += this.speed * dt;
-};
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    // Draw the enemy on the screen, required method for game
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
 };
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+class Player {
+    constructor() {
+        this.sprite = "images/char-boy.png";
+        this.x = 200;
+        this.y = 400;
+    }
+    // Paint player on screen
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    
+    // Move player, bounded by the canvas
+    handleInput(keyName) {
+        if(keyName == 'left' && player.x > 0){
+            this.x -= 25;
+        } else if(keyName == 'up' && player.y > -25){
+            this.y -= 25;
+        } else if(keyName == 'right' && player.x < 400 ) {
+            this.x += 25;
+        } else if(keyName == 'down' && player.y < 400 ) {
+            this.y += 25;
+        }
 
-var Player = function() {
-    this.sprite = "images/char-boy.png";
-    this.x = 200;
-    this.y = 400;
-}
-
-Player.prototype.update = function(dt){
-    // will update this.x and this.y
-}
-
-Player.prototype.render = function(){
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
-Player.prototype.handleInput = function(keyName) {
-        
-    if(keyName == 'left' && player.x > 0){
-        this.x -= 25;
-    } else if(keyName == 'up' && player.y > -25){
-        this.y -= 25;
-    } else if(keyName == 'right' && player.x < 400 ) {
-        this.x += 25;
-    } else if(keyName == 'down' && player.y < 400 ) {
-        this.y += 25;
+        checkIfWon(this);
     }
 }
 
-const Cage = function(){
-    this.sprite = "images/nicholas-cage.png";
-    this.x = 225;
-    this.y = 0;
-}
 
-Cage.prototype.render = function(){
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50, 75);
-}
-
-Cage.prototype.update = function() {
-    if (comparePositions(player, cage, compareRadius = 45)){
-        console.log("win")
-        let winner = document.querySelector('.winner');
-        winner.style.display = "flex";
+// Make nicholas cage. Kept in class, so can make multiple in the future 
+class Cage {
+    constructor() {
+        this.sprite = "images/nicholas-cage.png";
+        this.x = 225;
+        this.y = 0;
     }
+
+    render () {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50, 75);
+    }
+
 }
 
+
+// Adds enemies at random intervals
 function addRandomEnemy() {
     // difficulty can be adjusted by changing frequency
-    // its better to change difficulty with speed (see Enemy.update)
     const frequencyConstant = 0.05;
-    const minDistance = 100;
     
-    // check if last enemy is the minimum distance, so no overlap
+    // if last created bug is far enough that it won't overlap randomly generate another
+    const minDistance = 100;
     if (allEnemies[0].x > minDistance) {
         // randomly add a new enemy
         randomDecider = Math.floor(Math.random() * (1 + frequencyConstant));
@@ -97,6 +84,8 @@ function addRandomEnemy() {
     }
 }
 
+
+// Randomly returns lane 1-3
 function randomLane() {
     lane = Math.floor(Math.random() * 3) + 1;
     switch(lane){
@@ -112,10 +101,9 @@ function randomLane() {
     }
 };
 
+
+// If player and enemy collide, reset player
 function checkCollisions() {
-    // if player is in the same space as enemy
-    // get player x / y
-    // make a for each loop for enemies
     allEnemies.forEach((enemy) => {
         if (comparePositions(player, enemy, compareRadius = 65)) {
             player.x = 200;
@@ -124,16 +112,23 @@ function checkCollisions() {
     })
 }
 
+
+// check if first and second object overlap
 function comparePositions(first, second, compareRadius) {
     let xClear = Math.abs(first.x - second.x) < compareRadius;
     let yClear = Math.abs(first.y - second.y) < compareRadius;
     return xClear && yClear;
 }
 
+// If player and cage are in the same place, reveal win div
+function checkIfWon(playerInstance, cageInstance = cage) {
+    if (comparePositions(playerInstance, cageInstance, compareRadius = 45)) {
+        let winner = document.querySelector('.winner');
+        winner.style.display = "flex";
+    }
+}
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Instantiate Classes
 
 let enemyOne = new Enemy(225);
 let player = new Player();
@@ -141,8 +136,6 @@ let cage = new Cage();
 
 let allEnemies = [enemyOne]
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',

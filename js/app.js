@@ -36,13 +36,13 @@ class Player {
     
     // Move player, bounded by the canvas
     handleInput(keyName) {
-        if(keyName == 'left' && player.x > 0){
+        if(keyName == 'left' && this.x > 0){
             this.x -= 25;
-        } else if(keyName == 'up' && player.y > -25){
+        } else if(keyName == 'up' && this.y > -25){
             this.y -= 25;
-        } else if(keyName == 'right' && player.x < 400 ) {
+        } else if(keyName == 'right' && this.x < 400 ) {
             this.x += 25;
-        } else if(keyName == 'down' && player.y < 400 ) {
+        } else if(keyName == 'down' && this.y < 400 ) {
             this.y += 25;
         }
 

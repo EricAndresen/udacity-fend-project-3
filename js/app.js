@@ -55,7 +55,15 @@ class Player {
             this.y += 25;
         }
 
-        checkIfWon(this);
+        this.checkIfWon(this);
+    }
+
+    // If player and cage are in the same place, reveal win div
+    checkIfWon(playerInstance, cageInstance = cage) {
+        if (comparePositions(playerInstance, cageInstance, 45)) {
+            let winner = document.querySelector('.winner');
+            winner.style.display = "flex";
+        }
     }
 }
 
@@ -116,14 +124,6 @@ function comparePositions(first, second, compareRadius = 65) {
     let xClear = Math.abs(first.x - second.x) < compareRadius;
     let yClear = Math.abs(first.y - second.y) < compareRadius;
     return xClear && yClear;
-}
-
-// If player and cage are in the same place, reveal win div
-function checkIfWon(playerInstance, cageInstance = cage) {
-    if (comparePositions(playerInstance, cageInstance, compareRadius = 45)) {
-        let winner = document.querySelector('.winner');
-        winner.style.display = "flex";
-    }
 }
 
 // Instantiate Classes

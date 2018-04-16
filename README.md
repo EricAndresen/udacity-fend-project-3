@@ -1,12 +1,9 @@
-frontend-nanodegree-arcade-game
-===============================
+## Arcade Game
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This is a required project for my [Udacity Front End Nanodegree](https://github.com/udacity/fend) to demostrate knowledge of Object Oriented Programming. It is essentially a frogger clone using ES6 classes and a provided game engine to generate and move the characters. Any code that was provided is commented. Most of the code I contributed is in app.js.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+_Note: In general I prefer to avoid classes and "this" where possible._
 
-## Instructions
+### Instructions
 
-To run clone this github repo and open index.html
-
-To win the game reach Nicholas Cage, but if you get hit by the lady bugs you'll respawn at the start!
+Nicolas cage is drowning! To win the game reach Nicholas Cage, but beware of the lady bugs! If they hit you you'll respawn at the start!
